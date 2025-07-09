@@ -48,6 +48,7 @@ const Dashboard = () => {
                   <th className="border px-4 py-2">S.No.</th>
                   <th className="border px-4 py-2 text-left">Name</th>
                   <th className="border px-4 py-2 text-left">Phone</th>
+                  <th className="border px-4 py-2 text-left">Department</th>
                   <th className="border px-4 py-2 text-left">Designation</th>
                   <th className="border px-4 py-2 text-left">Campus</th>
                   <th className="border px-4 py-2 text-left">Timetable</th>
@@ -68,6 +69,7 @@ const Dashboard = () => {
                     </td>
                     <td className="border px-4 py-2">{emp.name}</td>
                     <td className="border px-4 py-2">{emp.phone || "-"}</td>
+                    <td className="border px-4 py-2">{emp.department}</td>
                     <td className="border px-4 py-2">{emp.designation}</td>
                     <td className="border px-4 py-2">
                       {typeof emp.campus === "object"
