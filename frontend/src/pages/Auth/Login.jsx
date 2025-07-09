@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import dseuLogo from "../../assets/logo/DSEULOGO.svg";
 import { FaEye, FaRegEyeSlash, FaSpinner } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-// import { loginUser } from "../../Redux/slice/employeeSlice";
+
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify"; // Make sure react-toastify is installed and imported
+import { loginUser } from "../../Redux/slice/employeeSlice";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -55,8 +56,9 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await dispatch().unwrap();
-      // loginUser({ email: form.username, password: form.password })
+     await dispatch(
+  loginUser({ username: form.username, password: form.password })
+).unwrap();
 
       toast.success("Login successful!");
       navigate("/dashboard");
@@ -137,24 +139,24 @@ const Login = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 ${
-            loading
-              ? "bg-blue-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          } text-white font-semibold transition-colors`}
-        >
-          {loading ? (
-            <>
-              Logging in
-              <FaSpinner className="animate-spin text-white text-lg" />
-            </>
-          ) : (
-            "Login"
-          )}
-        </button>
+       <button
+  type="submit"
+  disabled={loading}
+  className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 ${
+    loading
+      ? "bg-blue-400 cursor-not-allowed"
+      : "bg-blue-600 hover:bg-blue-700"
+  } text-white font-semibold transition-colors`}
+>
+  {loading ? (
+    <>
+      Logging in
+      <FaSpinner className="animate-spin text-white text-lg" />
+    </>
+  ) : (
+    "Login"
+  )}
+</button>
 
         {/* General Error */}
         {errors.general && typeof errors.general === "string" && (
