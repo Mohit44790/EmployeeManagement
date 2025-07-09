@@ -51,6 +51,18 @@ export const fetchDailyUpdates = createAsyncThunk(
   }
 );
 
+export const fetchAvailableCycles = createAsyncThunk(
+  "employee/fetchAvailableCycles",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`${USER_API_END_POINT}/admin/available-cycles`);
+      return response.data.cycles || [];
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch cycles");
+    }
+  }
+);
+
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
@@ -59,6 +71,9 @@ const employeeSlice = createSlice({
     loading: false,
     error: null,
     employeeList: [],
+     cycles: [],
+  cyclesLoading: false,
+  cyclesError: null,
   },
   reducers: {
     logout: (state) => {
@@ -93,6 +108,18 @@ const employeeSlice = createSlice({
       .addCase(fetchDailyUpdates.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchAvailableCycles.pending, (state) => {
+        state.cyclesLoading = true;
+        state.cyclesError = null;
+      })
+      .addCase(fetchAvailableCycles.fulfilled, (state, action) => {
+        state.cyclesLoading = false;
+        state.cycles = action.payload;
+      })
+      .addCase(fetchAvailableCycles.rejected, (state, action) => {
+        state.cyclesLoading = false;
+        state.cyclesError = action.payload;
       });
   },
 });
