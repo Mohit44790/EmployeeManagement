@@ -55,9 +55,8 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await dispatch(
-        // loginUser({ email: form.username, password: form.password })
-      ).unwrap();
+      await dispatch().unwrap();
+      // loginUser({ email: form.username, password: form.password })
 
       toast.success("Login successful!");
       navigate("/dashboard");
@@ -138,24 +137,24 @@ const Login = () => {
         </div>
 
         {/* Submit Button */}
-       <button
-  type="submit"
-  disabled={loading}
-  className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 ${
-    loading
-      ? "bg-blue-400 cursor-not-allowed"
-      : "bg-blue-600 hover:bg-blue-700"
-  } text-white font-semibold transition-colors`}
->
-  {loading ? (
-    <>
-      Logging in
-      <FaSpinner className="animate-spin text-white text-lg" />
-    </>
-  ) : (
-    "Login"
-  )}
-</button>
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 ${
+            loading
+              ? "bg-blue-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          } text-white font-semibold transition-colors`}
+        >
+          {loading ? (
+            <>
+              Logging in
+              <FaSpinner className="animate-spin text-white text-lg" />
+            </>
+          ) : (
+            "Login"
+          )}
+        </button>
 
         {/* General Error */}
         {errors.general && typeof errors.general === "string" && (
