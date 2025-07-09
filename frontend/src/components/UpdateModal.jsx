@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { USER_API_END_POINT } from "../Redux/constants/backendapi";
 
 const UpdateModal = ({ empId, onClose, onSuccess }) => {
   const [remarks, setRemarks] = useState("");
@@ -30,7 +31,7 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
       const query = new URLSearchParams({ remarks }).toString();
 
       await axios.post(
-        `http://68.183.6.149:8000/employee/update-employee/${empId}?${query}`,
+        `${USER_API_END_POINT}/employee/update-employee/${empId}?${query}`,
         formData,
         {
           headers: {

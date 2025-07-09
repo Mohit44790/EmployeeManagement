@@ -3,6 +3,7 @@ import { LucideCalendarCheck2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAvailableCycles } from "../Redux/slice/employeeSlice";
 import withAuthProtection from "../components/withAuthProtection";
+import { USER_API_END_POINT } from "../Redux/constants/backendapi";
 
 
 const History = () => {
@@ -21,7 +22,7 @@ const History = () => {
       return;
     }
     // Open the PDF link in a new tab
-    window.open(`http://68.183.6.149:8000/employee/employee-pdf?cycle=${selectedCycle}`, "_blank");
+    window.open(`${USER_API_END_POINT}/employee/employee-pdf?cycle=${selectedCycle}`, "_blank");
   };
 
   return (
