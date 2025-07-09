@@ -31,6 +31,26 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const fetchDailyUpdates = createAsyncThunk(
+  "employee/fetchDailyUpdates",
+  async (_, { getState, rejectWithValue }) => {
+    const { token } = getState().employee;
+    try {
+      const response = await axios.get(
+        `${USER_API_END_POINT}/employee/daily-employee-update`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data; // Expecting an array of employee objects
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Fetch failed");
+    }
+  }
+);
+
 const employeeSlice = createSlice({
   name: "employee",
   initialState: {
@@ -59,6 +79,18 @@ const employeeSlice = createSlice({
         localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchDailyUpdates.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchDailyUpdates.fulfilled, (state, action) => {
+        state.loading = false;
+        state.employeeList = action.payload;
+      })
+      .addCase(fetchDailyUpdates.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

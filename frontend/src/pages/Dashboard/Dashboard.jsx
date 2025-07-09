@@ -1,48 +1,91 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDailyUpdates } from "../../Redux/slice/employeeSlice";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { employeeList, loading, error } = useSelector((state) => state.employee);
 
-      const today = new Date();
+  useEffect(() => {
+    dispatch(fetchDailyUpdates());
+  }, [dispatch]);
 
-  // Format date as DD-MM-YYYY
-  const formattedDate = today.toLocaleDateString('en-GB'); 
-  
-  const formattedDateWithDashes = formattedDate.replace(/\//g, '-');
+  const today = new Date();
+  const formattedDateWithDashes = today.toLocaleDateString("en-GB").replace(/\//g, "-");
+
   return (
     <div className="p-6 w-full max-w-7xl mx-auto">
-      {/* Header */}
-      <h1 className="font-bold text-xl text-center text-gray-800 bg-white rounded-full py-3 px-6 shadow-md cursor-pointer hover:bg-gray-100 transition-colors">
-        Today's To-Do Tasks
+      <h1 className="font-bold text-xl text-center text-gray-800 bg-white rounded-full py-3 px-6 shadow-md mb-10">
+        Today's To‑Do Tasks
       </h1>
 
-      {/* Task Container */}
-      <div className="mt-10 bg-blue-50 rounded-2xl shadow-inner border border-blue-200 p-6">
-        {/* Date Header */}
-        <h2 className="font-semibold text-lg text-center text-gray-900 bg-white rounded-full py-2 px-6 shadow-md cursor-pointer hover:bg-gray-100 transition-colors mb-8 max-w-md mx-auto">
+      <div className="bg-blue-50 rounded-2xl shadow-inner border border-blue-200 p-6 overflow-auto">
+        <h2 className="font-semibold text-lg text-center text-gray-900 bg-white rounded-full py-2 px-6 shadow-md mb-8 max-w-md mx-auto">
           Date: {formattedDateWithDashes}
         </h2>
 
-        {/* Table header */}
-        <div className="hidden md:grid grid-cols-6 gap-4 text-sm font-semibold text-gray-700 px-4 py-2 border-b border-gray-300 mb-4">
-          <div>S.No.</div>
-          <div>Faculty Name</div>
-          <div>Time Table</div>
-          <div>Campus Name</div>
-          <div>Location</div>
-          <div>Remarks</div>
-        </div>
+        {loading && <p className="text-center">Loading...</p>}
+        {error && <p className="text-center text-red-500">{error}</p>}
 
-        {/* Example Task Item */}
-        <div className="grid grid-cols-6 gap-4 text-sm text-gray-800 px-4 py-3 bg-white rounded-lg mb-3 shadow-sm items-center">
-          <div>1</div>
-          <div>Dr. John Doe</div>
-          <div>9 AM - 11 AM</div>
-          <div>Main Campus</div>
-          <div>Building A, Room 101</div>
-          <div>Bring lab materials</div>
-        </div>
-
-        {/* Add more task rows here */}
+        {!loading && !error && (
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-auto border border-gray-300 bg-white rounded-lg shadow-sm overflow-hidden">
+              <thead className="bg-gray-100 text-gray-700 text-sm">
+                <tr>
+                  <th className="border px-4 py-2">S.No.</th>
+                  <th className="border px-4 py-2 text-left">Name</th>
+                  <th className="border px-4 py-2 text-left">Phone</th>
+                  <th className="border px-4 py-2 text-left">Designation</th>
+                  <th className="border px-4 py-2 text-left">Campus</th>
+                  <th className="border px-4 py-2 text-left">Location</th>
+                  <th className="border px-4 py-2 text-left">Timetable</th>
+                  <th className="border px-4 py-2 text-left">Photo</th>
+                  <th className="border px-4 py-2 text-left">Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                {employeeList.map((emp, index) => (
+                  <tr key={emp._id} className="text-sm text-gray-800 hover:bg-gray-50">
+                    <td className="border px-4 py-2 text-center">{index + 1}</td>
+                    <td className="border px-4 py-2">{emp.name}</td>
+                    <td className="border px-4 py-2">{emp.phone || "-"}</td>
+                    <td className="border px-4 py-2">{emp.designation}</td>
+                    <td className="border px-4 py-2">
+                      {typeof emp.campus === "object" ? emp.campus.name : emp.campus || "-"}
+                    </td>
+                    <td className="border px-4 py-2">{emp.location || "-"}</td>
+                    <td className="border px-4 py-2">
+                      {emp.timetable_pdf ? (
+                        <a
+                          href={emp.timetable_pdf}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline text-sm"
+                        >
+                          View PDF
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+                    <td className="border px-4 py-2">
+                      {emp.classroom_photo ? (
+                        <img
+                          src={emp.classroom_photo}
+                          alt="Classroom"
+                          className="h-12 w-16 object-cover rounded"
+                        />
+                      ) : (
+                        <span className="text-gray-400 italic text-xs">No Photo</span>
+                      )}
+                    </td>
+                    <td className="border px-4 py-2">{emp.remarks || "-"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
