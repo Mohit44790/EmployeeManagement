@@ -50,9 +50,9 @@ const Dashboard = () => {
                   <th className="border px-4 py-2 text-left">Phone</th>
                   <th className="border px-4 py-2 text-left">Designation</th>
                   <th className="border px-4 py-2 text-left">Campus</th>
-                  <th className="border px-4 py-2 text-left">Location</th>
                   <th className="border px-4 py-2 text-left">Timetable</th>
-                  <th className="border px-4 py-2 text-left">Photo</th>
+                  <th className="border px-4 py-2 text-left">Location</th>
+                  <th className="border px-4 py-2 text-left">Classroom</th>
                   <th className="border px-4 py-2 text-left">Remarks</th>
                   <th className="border px-4 py-2 text-left">Upload</th>
                 </tr>
@@ -75,20 +75,6 @@ const Dashboard = () => {
                         : emp.campus || "-"}
                     </td>
                     <td className="border px-4 py-2">
-                      {emp.location ? (
-                        <a
-                          href={emp.location}
-                          target="_blank"
-                          className="text-blue-600 underline text-sm"
-                        >
-                          Location
-                        </a>
-                      ) : (
-                        "-"
-                      )}
-                    </td>
-
-                    <td className="border px-4 py-2">
                       {emp.timetable_pdf ? (
                         <a
                           href={emp.timetable_pdf}
@@ -103,6 +89,20 @@ const Dashboard = () => {
                       )}
                     </td>
                     <td className="border px-4 py-2">
+                      {emp.location ? (
+                        <a
+                          href={emp.location}
+                          target="_blank"
+                          className="text-blue-600 underline text-sm"
+                        >
+                          Location
+                        </a>
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+
+                    <td className="border px-4 py-2">
                       {emp.classroom_photo ? (
                         <a
                           href={emp.classroom_photo}
@@ -115,7 +115,9 @@ const Dashboard = () => {
                         "-"
                       )}
                     </td>
-                    <td className="border px-4 py-2 h-fit">{emp.remarks || "-"}</td>
+                    <td className="border px-4 py-2 h-fit">
+                      {emp.remarks || "-"}
+                    </td>
                     <td className="border px-4 py-2 text-center">
                       <button
                         onClick={() => {

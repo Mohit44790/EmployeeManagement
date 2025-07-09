@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 const UpdateModal = ({ empId, onClose, onSuccess }) => {
@@ -10,6 +11,16 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
   const token = localStorage.getItem("token");
 
   const handleSubmit = async () => {
+    if (!remarks) {
+      toast.error("Remarks is required");
+      return;
+    }
+
+    if (!locationImage || !classroomPhoto) {
+      toast.error("Please upload all images");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const formData = new FormData();
@@ -45,7 +56,10 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
 
         <div className="flex flex-col gap-4">
           <div>
-            <label className="text-sm font-medium text-gray-700">Remarks</label>
+            <label className="text-sm font-medium text-gray-700">
+              Remarks
+              <span className="text-red-500"> *</span>
+            </label>
             <input
               type="text"
               value={remarks}
@@ -55,26 +69,64 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
             />
           </div>
 
-          <div>
+          {/* LOCATION */}
+          <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-gray-700">
-              Location Image
+              Location Image <span className="text-red-500">*</span>
             </label>
-            <input
-              type="file"
-              onChange={(e) => setLocationImage(e.target.files[0])}
-              className="w-full mt-1"
-            />
+
+            <div className="relative">
+              <input
+                type="file"
+                id="locationImageInput"
+                accept="image/*"
+                onChange={(e) => setLocationImage(e.target.files[0])}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <label
+                htmlFor="locationImageInput"
+                className="inline-block w-full text-center bg-blue-50 text-blue-700 border border-blue-300 rounded-md py-2 px-4 cursor-pointer hover:bg-blue-100 transition-all"
+              >
+                {locationImage ? "Change File" : "Upload File"}
+              </label>
+            </div>
+
+            {locationImage && (
+              <p className="text-sm text-gray-600 truncate">
+                Selected:{" "}
+                <span className="font-medium">{locationImage.name}</span>
+              </p>
+            )}
           </div>
 
-          <div>
+          {/* CLASSROOM */}
+          <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-gray-700">
-              Classroom Photo
+              Classroom Photo <span className="text-red-500">*</span>
             </label>
-            <input
-              type="file"
-              onChange={(e) => setClassroomPhoto(e.target.files[0])}
-              className="w-full mt-1"
-            />
+
+            <div className="relative">
+              <input
+                type="file"
+                id="classroomPhotoInput"
+                accept="image/*"
+                onChange={(e) => setClassroomPhoto(e.target.files[0])}
+                className="absolute inset-0 opacity-0 cursor-pointer"
+              />
+              <label
+                htmlFor="classroomPhotoInput"
+                className="inline-block w-full text-center bg-blue-50 text-blue-700 border border-blue-300 rounded-md py-2 px-4 cursor-pointer hover:bg-blue-100 transition-all"
+              >
+                {classroomPhoto ? "Change File" : "Upload File"}
+              </label>
+            </div>
+
+            {classroomPhoto && (
+              <p className="text-sm text-gray-600 truncate">
+                Selected:{" "}
+                <span className="font-medium">{classroomPhoto.name}</span>
+              </p>
+            )}
           </div>
         </div>
 
