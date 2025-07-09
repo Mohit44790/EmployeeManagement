@@ -13,13 +13,13 @@ function App() {
       element: <Login />,
     },
     {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
       path: "/",
       element: <Layout />,
       children: [
-        {
-          path: "/profile",
-          element: <Profile />,
-        },
         {
           path: "/dashboard",
           element: <Dashboard />,
