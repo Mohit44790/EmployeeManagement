@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDailyUpdates } from "../../Redux/slice/employeeSlice";
 import UpdateModal from "../../components/UpdateModal";
+import DashboardLoader from "../../components/ShimmarUI/DashboardLoader";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +22,10 @@ const Dashboard = () => {
     .toLocaleDateString("en-GB")
     .replace(/\//g, "-");
 
+  if(loading) {
+    return <DashboardLoader />;
+  }
+
   return (
     <div className="py-6 px-1 w-full max-w-7xl mx-auto">
       <h1 className="font-bold text-xl text-center text-gray-800 bg-white rounded-full py-3 px-6 shadow-md mb-10">
@@ -32,7 +37,6 @@ const Dashboard = () => {
           Date: {formattedDateWithDashes}
         </h2>
 
-        {loading && <p className="text-center">Loading...</p>}
         {error && <p className="text-center text-red-500">{error}</p>}
 
         {!loading && !error && (
