@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDailyUpdates } from "../../Redux/slice/employeeSlice";
 import UpdateModal from "../../components/UpdateModal";
 import DashboardLoader from "../../components/ShimmarUI/DashboardLoader";
+import withAuthProtection from "../../components/withAuthProtection";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
@@ -22,7 +23,7 @@ const Dashboard = () => {
     .toLocaleDateString("en-GB")
     .replace(/\//g, "-");
 
-  if(loading) {
+  if (loading) {
     return <DashboardLoader />;
   }
 
@@ -145,4 +146,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+const ProtectedProfile = withAuthProtection(Dashboard);
+export default ProtectedProfile;

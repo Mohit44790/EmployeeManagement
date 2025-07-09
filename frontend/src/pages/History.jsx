@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LucideCalendarCheck2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAvailableCycles } from "../Redux/slice/employeeSlice";
+import withAuthProtection from "../components/withAuthProtection";
 
 
 const History = () => {
@@ -76,4 +77,5 @@ const History = () => {
   );
 };
 
-export default History;
+const ProtectedProfile = withAuthProtection(History);
+export default ProtectedProfile;

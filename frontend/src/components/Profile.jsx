@@ -6,6 +6,7 @@ import { profileHolder } from "../assets/logo";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
+import withAuthProtection from "./withAuthProtection";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -59,7 +60,11 @@ const Profile = () => {
               <div className="rounded-t-2xl bg-blue-500 h-20 -mt-6 mb-4" />
               <div className="-mt-16 mb-2 flex justify-center">
                 <img
-                  src={profile.profile_photo || profileHolder}
+                  src={
+                    profile.profile_photo === "string"
+                      ? profileHolder
+                      : profile.profile_photo
+                  }
                   alt={profile.name}
                   className="w-24 h-24 rounded-full border-4 border-white object-cover"
                 />
@@ -149,4 +154,5 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const ProtectedProfile = withAuthProtection(Profile);
+export default ProtectedProfile;
