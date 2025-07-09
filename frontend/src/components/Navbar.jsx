@@ -7,7 +7,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate("/dashboard"); // Redirect to dashboard instead of root "/"
   };
 
   const handleProfileClick = () => {
@@ -17,12 +17,14 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100 px-4 py-4 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        <div
-          className="flex items-center gap-2 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+        <button
+          aria-label="Home"
           onClick={handleLogoClick}
+          className="flex items-center gap-2 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+          type="button"
         >
           <img src={logo} alt="DSEU Logo" className="h-14" />
-        </div>
+        </button>
 
         <div className="relative flex-1 max-w-2xl mx-4 hidden md:block">
           <div className="relative">
@@ -35,11 +37,12 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Right: Profile Icon */}
         <div className="flex items-center gap-4">
           <button
             onClick={handleProfileClick}
             className="flex items-center gap-2 p-1.5 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+            type="button"
+            aria-label="Profile"
           >
             <img
               src={profileHolder}

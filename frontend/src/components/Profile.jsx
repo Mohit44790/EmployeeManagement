@@ -1,7 +1,7 @@
 const Profile = () => {
   return (
-    <div>
-        PROFILEEE
+    <div className="mt-28">
+        sdsd lorem1000
     </div>
   )
 }
