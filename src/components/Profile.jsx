@@ -13,14 +13,14 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear("token");
+    sessionStorage.clear("token");
     toast.success("User Logged out successfully!");
     navigate("/");
   };
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.get(
         `${USER_API_END_POINT}/admin/get-profile`,
         {

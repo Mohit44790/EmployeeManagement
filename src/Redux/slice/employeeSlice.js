@@ -67,7 +67,7 @@ const employeeSlice = createSlice({
   name: "employee",
   initialState: {
     user: null, // You can populate this with decoded JWT later if needed
-    token: localStorage.getItem("token") || null,
+    token: sessionStorage.getItem("token") || null,
     loading: false,
     error: null,
     employeeList: [],
@@ -79,7 +79,7 @@ const employeeSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -91,7 +91,7 @@ const employeeSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
-        localStorage.setItem("token", action.payload.token);
+        sessionStorage.setItem("token", action.payload.token);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;

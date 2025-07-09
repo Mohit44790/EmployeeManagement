@@ -9,7 +9,7 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
   const [classroomPhoto, setClassroomPhoto] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const handleSubmit = async () => {
     if (!remarks) {

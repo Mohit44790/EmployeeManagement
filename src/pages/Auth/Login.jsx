@@ -8,7 +8,7 @@ import { toast } from "react-toastify"; // Make sure react-toastify is installed
 import { loginUser } from "../../Redux/slice/employeeSlice";
 
 const Login = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const [form, setForm] = useState({
     username: "",
