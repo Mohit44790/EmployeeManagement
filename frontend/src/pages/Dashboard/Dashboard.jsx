@@ -115,7 +115,7 @@ const Dashboard = () => {
                         "-"
                       )}
                     </td>
-                    <td className="border px-4 py-2">{emp.remarks || "-"}</td>
+                    <td className="border px-4 py-2 h-fit">{emp.remarks || "-"}</td>
                     <td className="border px-4 py-2 text-center">
                       <button
                         onClick={() => {

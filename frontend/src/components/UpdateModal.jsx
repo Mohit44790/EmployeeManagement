@@ -91,7 +91,9 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
             onClick={handleSubmit}
             disabled={submitting}
             className={`px-4 py-2 rounded text-white flex items-center justify-center gap-2 cursor-pointer ${
-              submitting ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              submitting
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
             {submitting ? (
