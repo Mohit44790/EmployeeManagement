@@ -87,7 +87,7 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
                 htmlFor="locationImageInput"
                 className="inline-block w-full text-center bg-blue-50 text-blue-700 border border-blue-300 rounded-md py-2 px-4 cursor-pointer hover:bg-blue-100 transition-all"
               >
-                {locationImage ? "Change File" : "Upload File"}
+                Upload File
               </label>
             </div>
 
@@ -117,7 +117,7 @@ const UpdateModal = ({ empId, onClose, onSuccess }) => {
                 htmlFor="classroomPhotoInput"
                 className="inline-block w-full text-center bg-blue-50 text-blue-700 border border-blue-300 rounded-md py-2 px-4 cursor-pointer hover:bg-blue-100 transition-all"
               >
-                {classroomPhoto ? "Change File" : "Upload File"}
+                Upload File
               </label>
             </div>
 
