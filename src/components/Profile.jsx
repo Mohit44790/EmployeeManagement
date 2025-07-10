@@ -3,10 +3,11 @@ import axios from "axios";
 import { USER_API_END_POINT } from "../Redux/constants/backendapi";
 import Loader from "./Loader";
 import { profileHolder } from "../assets/logo";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Navbar from "./Navbar";
 import withAuthProtection from "./withAuthProtection";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const Profile = () => {
   const [profile, setProfile] = useState(null);
@@ -148,6 +149,17 @@ const Profile = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm mt-8 p-6 ">
+          <Link to="/profile/change-password" className="flex items-center">
+            {" "}
+            <RiLockPasswordLine
+              size={20}
+              className="inline-block mr-2 text-blue-500 font-bold"
+            />{" "}
+            <h1 className=" text-gray-800 font-medium">Change Password</h1>
+          </Link>
         </div>
       </div>
     </>

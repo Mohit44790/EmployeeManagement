@@ -6,6 +6,7 @@ import NotFoundPage from "./pages/NotFound";
 import { Layout, Profile } from "./components";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import History from "./pages/History";
+import ChangePassword from './pages/ChangePassword';
 
 function App() {
   const router = createBrowserRouter([
@@ -16,6 +17,10 @@ function App() {
     {
       path: "/profile",
       element: <Profile />,
+    },
+    {
+      path: "/profile/change-password",
+      element: <ChangePassword />
     },
     {
       path: "/",
