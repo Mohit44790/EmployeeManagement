@@ -1,16 +1,37 @@
+import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import withAuthProtection from "../components/withAuthProtection";
+import { USER_API_END_POINT } from "../Redux/constants/backendapi";
 import { Navbar } from "../components";
+import withAuthProtection from "../components/withAuthProtection";
+import { useNavigate } from "react-router-dom";
 
-// const resetPassword = async () => {
-//   try {
+const resetPassword = async ({ old_password, new_password }) => {
+  try {
+    const token = sessionStorage.getItem("token");
 
-//   } catch (error) {
-//     console.error(error?.message || error);
-//   }
-// };
+    const formData = new URLSearchParams();
+    formData.append("old_password", old_password);
+    formData.append("new_password", new_password);
+
+    const response = await axios.post(
+      `${USER_API_END_POINT}/auth/reset-password`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -20,6 +41,7 @@ const ChangePassword = () => {
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,12 +59,18 @@ const ChangePassword = () => {
     try {
       setLoading(true);
 
+      await resetPassword({
+        old_password: oldPassword,
+        new_password: newPassword,
+      });
+
       toast.success("Password changed successfully.");
       setOldPassword("");
       setNewPassword("");
       setConfirmPassword("");
+      navigate("/dashboard");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to change password.");
+      toast.error(err.response?.data?.detail || err.response?.data?.message || "Failed to change password.");
     } finally {
       setLoading(false);
     }
@@ -103,7 +131,9 @@ const ChangePassword = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-full transition duration-200"
+            className={`w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-full transition duration-200 cursor-pointer ${
+              loading && "cursor-not-allowed"
+            }`}
             disabled={loading}
           >
             {loading ? "Changing..." : "Change Password"}
