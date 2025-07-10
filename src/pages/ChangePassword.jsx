@@ -1,37 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { USER_API_END_POINT } from "../Redux/constants/backendapi";
 import { Navbar } from "../components";
-import withAuthProtection from "../components/withAuthProtection";
 import { useNavigate } from "react-router-dom";
-
-const resetPassword = async ({ old_password, new_password }) => {
-  try {
-    const token = sessionStorage.getItem("token");
-
-    const formData = new URLSearchParams();
-    formData.append("old_password", old_password);
-    formData.append("new_password", new_password);
-
-    const response = await axios.post(
-      `${USER_API_END_POINT}/auth/reset-password`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
+import withAuthProtection from "../components/withAuthProtection";
+import { resetPassword } from "../utils/services";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -70,7 +43,11 @@ const ChangePassword = () => {
       setConfirmPassword("");
       navigate("/dashboard");
     } catch (err) {
-      toast.error(err.response?.data?.detail || err.response?.data?.message || "Failed to change password.");
+      toast.error(
+        err.response?.data?.detail ||
+          err.response?.data?.message ||
+          "Failed to change password."
+      );
     } finally {
       setLoading(false);
     }

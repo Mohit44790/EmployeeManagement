@@ -26,6 +26,7 @@ export const loginUser = createAsyncThunk(
         tokenType: response.data.token_type,
       };
     } catch (err) {
+      console.error(err);
       return rejectWithValue(err.response?.data?.detail || "Login failed");
     }
   }

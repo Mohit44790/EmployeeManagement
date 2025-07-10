@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import dseuLogo from "../../assets/logo/DSEULOGO.svg";
 import { FaEye, FaRegEyeSlash, FaSpinner } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; // Make sure react-toastify is installed and imported
+import { toast } from "react-toastify";
 import { loginUser } from "../../Redux/slice/employeeSlice";
 
 const Login = () => {
@@ -65,15 +65,11 @@ const Login = () => {
       toast.success("Login successful!");
       navigate("/dashboard");
     } catch (error) {
-      const message =
-        typeof error === "object" && error?.message
-          ? error.message
-          : "Login failed. Please try again.";
       setErrors((prev) => ({
         ...prev,
-        general: message,
+        general: error,
       }));
-      toast.error(message);
+      toast.error(error || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -150,7 +146,7 @@ const Login = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 ${
+          className={`w-full py-2 rounded-lg flex justify-center items-center gap-2 cursor-pointer ${
             loading
               ? "bg-blue-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700"
